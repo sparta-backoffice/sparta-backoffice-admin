@@ -1,11 +1,6 @@
 package com.sparta.backoffice.domain.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +20,11 @@ public class Lecture extends AuditingFields {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "lecture_id")
-	private Long lectureId;
+	private Long id;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name ="instructor_id")
+	private Instructor instructor;
 
 	@Column(name = "lecture_name")
 	private String lectureName;
