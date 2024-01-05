@@ -6,6 +6,7 @@ import com.sparta.backoffice.repository.LectureRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -15,6 +16,7 @@ public class LectureService {
 
 	private final LectureRepository lectureRepository;
 
+	@Transactional
 	public LectureDto createLecture(LectureDto lectureDto) {
 		Lecture lecture = Lecture.builder()
 				.lectureName(lectureDto.getLectureName())
@@ -27,18 +29,13 @@ public class LectureService {
 		Lecture saveLecture = lectureRepository.save(lecture);
 		return new LectureDto(saveLecture);
 	}
-
+	@Transactional
 	public LectureDto modifyLecture(Long id, LectureDto lectureDto) {
-		Optional<Lecture> findLecture = lectureRepository.findById(id);
-		if (findLecture.isPresent()) {
-			Lecture lecture = findLecture.get();
-			lecture.setLectureName(lectureDto.getLectureName());
-			lecture.setPrice(lectureDto.getPrice());
-			lecture.setIntroduction(lectureDto.getIntroduction());
-			lecture.setCategory(lectureDto.getCategory());
-			Lecture updateLecture = lectureRepository.save(lecture);
-			return new LectureDto(updateLecture);
-		}
-		throw new EntityNotFoundException("강의 정보가 없습니다.");
+		Lecture findLecture = lectureRepository.findById(id).orElseThrow();
+		findLecture.setLectureName(lectureDto.getLectureName());
+		findLecture.setPrice(lectureDto.getPrice());
+		findLecture.setIntroduction(lectureDto.getIntroduction());
+		findLecture.setCategory(lectureDto.getCategory());
+		return new LectureDto(findLecture);
 	}
 }
