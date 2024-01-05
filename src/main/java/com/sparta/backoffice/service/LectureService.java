@@ -29,6 +29,13 @@ public class LectureService {
 		Lecture saveLecture = lectureRepository.save(lecture);
 		return new LectureDto(saveLecture);
 	}
+
+	@Transactional
+	public LectureDto getLecture(Long id) {
+		Lecture lecture = lectureRepository.findById(id).orElseThrow();
+		return new LectureDto(lecture);
+	}
+
 	@Transactional
 	public LectureDto modifyLecture(Long id, LectureDto lectureDto) {
 		Lecture findLecture = lectureRepository.findById(id).orElseThrow();
