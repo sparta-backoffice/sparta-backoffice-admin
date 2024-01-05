@@ -11,7 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,4 +40,15 @@ public class LectureController {
 		return new ResponseEntity<>(lecture, HttpStatus.OK);
 	}
 
+	@GetMapping("/")
+	public ResponseEntity<List<LectureDto>> getLectureListByCategory(@RequestParam String category) {
+		List<LectureDto> lectures = lectureService.getLectureByCategory(category);
+		return new ResponseEntity<>(lectures, HttpStatus.OK);
+	}
+
+	@GetMapping("/instructors/{instructorId}")
+	public ResponseEntity<List<LectureDto>> getLectureListByInstructorId(@PathVariable Long instructorId) {
+		List<LectureDto> lectureDtoList = lectureService.getLectureListByInstructorId(instructorId);
+		return new ResponseEntity<>(lectureDtoList, HttpStatus.OK);
+	}
 }

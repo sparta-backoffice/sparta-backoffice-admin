@@ -8,7 +8,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -23,7 +26,6 @@ public class LectureService {
 				.price(lectureDto.getPrice())
 				.introduction(lectureDto.getIntroduction())
 				.category(lectureDto.getCategory())
-				.registerAt(lectureDto.getRegisterAt())
 				.build();
 
 		Lecture saveLecture = lectureRepository.save(lecture);
@@ -37,6 +39,14 @@ public class LectureService {
 	}
 
 	@Transactional
+	public List<LectureDto> getLectureByCategory(String category) {
+		List<Lecture> lectures = lectureRepository.findByCategoryOrderByRegisterAtDesc(category);
+		return lectures.stream()
+				.map(LectureDto::new)
+				.collect(Collectors.toList());
+	}
+
+	@Transactional
 	public LectureDto modifyLecture(Long id, LectureDto lectureDto) {
 		Lecture findLecture = lectureRepository.findById(id).orElseThrow();
 		findLecture.setLectureName(lectureDto.getLectureName());
@@ -44,5 +54,10 @@ public class LectureService {
 		findLecture.setIntroduction(lectureDto.getIntroduction());
 		findLecture.setCategory(lectureDto.getCategory());
 		return new LectureDto(findLecture);
+	}
+
+	public List<LectureDto> getLectureListByInstructorId(Long InstructorId) {
+		List<Lecture> lectureList = lectureRepository.findByInstructorId(InstructorId);
+		return lectureList.stream().map(LectureDto::new).toList();
 	}
 }

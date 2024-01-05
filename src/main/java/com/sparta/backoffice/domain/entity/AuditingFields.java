@@ -18,5 +18,5 @@ public abstract class AuditingFields {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @CreatedDate
     @Column
-    private LocalDate createAt = LocalDate.now();
+    private LocalDate registerAt = LocalDate.now();
 }
