@@ -24,7 +24,7 @@ public class LectureDto {
 		this.price = entity.getPrice();
 		this.introduction = entity.getIntroduction();
 		this.category = entity.getCategory();
-		this.registerAt = entity.getCreateAt();
+		this.registerAt = entity.getRegisterAt();
 		this.instructorId = entity.getInstructor().getId();
 	}
 }
