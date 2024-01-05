@@ -24,4 +24,8 @@ public class InstructorController {
         return new ResponseEntity<>(instructorService.modifyInstructor(requestDto),HttpStatus.OK);
     }
 
+    @GetMapping("/{instructorId}")
+    public ResponseEntity<InstructorDto> getInstructor(@PathVariable Long instructorId) {
+        return new ResponseEntity<>(instructorService.getInstructor(instructorId),HttpStatus.OK);
+    }
 }
