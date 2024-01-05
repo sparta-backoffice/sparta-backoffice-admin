@@ -37,10 +37,4 @@ public class Lecture extends AuditingFields {
 
 	@Column(name = "category")
 	private String category;
-
-	@Column(name = "register_at")
-	private LocalDate registerAt;
-
-
-
 }
