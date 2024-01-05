@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,5 +46,10 @@ public class LectureService {
 		findLecture.setIntroduction(lectureDto.getIntroduction());
 		findLecture.setCategory(lectureDto.getCategory());
 		return new LectureDto(findLecture);
+	}
+
+	public List<LectureDto> getLectureListByInstructorId(Long InstructorId) {
+		List<Lecture> lectureList = lectureRepository.findByInstructorId(InstructorId);
+		return lectureList.stream().map(LectureDto::new).toList();
 	}
 }
