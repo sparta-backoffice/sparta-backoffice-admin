@@ -36,4 +36,8 @@ public class InstructorService {
 
         return new InstructorDto(instructor);
     }
+
+    public InstructorDto getInstructor(Long instructorId) {
+        return new InstructorDto(instructorRepository.findById(instructorId).orElseThrow());
+    }
 }
