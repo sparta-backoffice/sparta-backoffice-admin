@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -37,6 +38,12 @@ public class LectureController {
 	public ResponseEntity<LectureDto> getLecture(@PathVariable Long id) {
 		LectureDto lecture = lectureService.getLecture(id);
 		return new ResponseEntity<>(lecture, HttpStatus.OK);
+	}
+
+	@GetMapping("/")
+	public ResponseEntity<List<LectureDto>> getLectureListByCategory(@RequestParam String category) {
+		List<LectureDto> lectures = lectureService.getLectureByCategory(category);
+		return new ResponseEntity<>(lectures, HttpStatus.OK);
 	}
 
 	@GetMapping("/instructors/{instructorId}")

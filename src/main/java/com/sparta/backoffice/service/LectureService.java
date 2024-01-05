@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -25,7 +26,6 @@ public class LectureService {
 				.price(lectureDto.getPrice())
 				.introduction(lectureDto.getIntroduction())
 				.category(lectureDto.getCategory())
-				.registerAt(lectureDto.getRegisterAt())
 				.build();
 
 		Lecture saveLecture = lectureRepository.save(lecture);
@@ -36,6 +36,14 @@ public class LectureService {
 	public LectureDto getLecture(Long id) {
 		Lecture lecture = lectureRepository.findById(id).orElseThrow();
 		return new LectureDto(lecture);
+	}
+
+	@Transactional
+	public List<LectureDto> getLectureByCategory(String category) {
+		List<Lecture> lectures = lectureRepository.findByCategoryOrderByRegisterAtDesc(category);
+		return lectures.stream()
+				.map(LectureDto::new)
+				.collect(Collectors.toList());
 	}
 
 	@Transactional

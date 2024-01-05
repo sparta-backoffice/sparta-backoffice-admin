@@ -1,6 +1,5 @@
 package com.sparta.backoffice.domain.dto;
 
-import com.sparta.backoffice.domain.entity.Instructor;
 import com.sparta.backoffice.domain.entity.Lecture;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
