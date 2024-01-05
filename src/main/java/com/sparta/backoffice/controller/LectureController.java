@@ -5,6 +5,7 @@ import com.sparta.backoffice.service.LectureService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,6 +28,12 @@ public class LectureController {
 	@PutMapping("/{id}")
 	public ResponseEntity<LectureDto> modifyLecture(@PathVariable Long id, @RequestBody LectureDto lectureDto) {
 		LectureDto lecture = lectureService.modifyLecture(id, lectureDto);
+		return new ResponseEntity<>(lecture, HttpStatus.OK);
+	}
+
+	@GetMapping("/{id}")
+	public ResponseEntity<LectureDto> getLecture(@PathVariable Long id) {
+		LectureDto lecture = lectureService.getLecture(id);
 		return new ResponseEntity<>(lecture, HttpStatus.OK);
 	}
 
