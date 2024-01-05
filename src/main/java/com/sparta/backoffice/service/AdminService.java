@@ -20,6 +20,12 @@ public class AdminService {
 
     @Transactional
     public void createAdmin(@Valid AdminDto requestDto) {
+        Authority authority = requestDto.getAuthority();
+        Department department = requestDto.getDepartment();
+
+        if (Department.MARKETING.equals(department) && Authority.MANAGER.equals(authority)) {
+            requestDto.setAuthority(Authority.STAFF);
+        }
 
         Admin admin = Admin.builder()
                 .email(requestDto.getEmail())
