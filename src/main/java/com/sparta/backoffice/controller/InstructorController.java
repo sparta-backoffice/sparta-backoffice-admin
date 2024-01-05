@@ -5,10 +5,7 @@ import com.sparta.backoffice.service.InstructorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -19,7 +16,12 @@ public class InstructorController {
 
     @PostMapping
     public ResponseEntity<InstructorDto> createInstructor(@RequestBody InstructorDto requestDto) {
-         return new ResponseEntity<>(instructorService.creteInstructor(requestDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(instructorService.creteInstructor(requestDto), HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{instructorId}")
+    public ResponseEntity<InstructorDto> modifyInstructor(@RequestBody InstructorDto requestDto) {
+        return new ResponseEntity<>(instructorService.modifyInstructor(requestDto),HttpStatus.OK);
     }
 
 }
