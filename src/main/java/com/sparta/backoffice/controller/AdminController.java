@@ -73,8 +73,8 @@ public class AdminController {
     @GetMapping("/products")
     public String getProducts(HttpServletRequest req) {
         System.out.println("ProductController.getProducts : 인증 완료");
-        Admin admin = (Admin) req.getAttribute("email");
-        System.out.println("user.getEmail() = " + admin.getEmail());
+        Admin admin = (Admin) req.getAttribute("admin");
+        System.out.println("user.getEmail() = " + admin.getAuthority());
 
         return "redirect:/";
     }

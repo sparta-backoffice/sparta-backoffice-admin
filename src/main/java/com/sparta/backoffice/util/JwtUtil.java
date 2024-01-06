@@ -1,5 +1,6 @@
 package com.sparta.backoffice.util;
 
+import com.sparta.backoffice.domain.entity.Admin;
 import com.sparta.backoffice.domain.entity.Authority;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
@@ -19,7 +20,6 @@ import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
-
 
 @Component
 public class JwtUtil {
@@ -45,14 +45,13 @@ public class JwtUtil {
         byte[] bytes = Base64.getDecoder().decode(secretKey);
         key = Keys.hmacShaKeyFor(bytes);
     }
-
     // 토큰 생성
-    public String createToken(String username, Authority role) {
+    public String createToken(String email, Authority role) {
         Date date = new Date();
 
         return BEARER_PREFIX +
                 Jwts.builder()
-                        .setSubject(username) // 사용자 식별자값(ID)
+                        .setSubject(email) // 사용자 식별자값(ID)
                         .claim(AUTHORIZATION_KEY, role) // 사용자 권한
                         .setExpiration(new Date(date.getTime() + TOKEN_TIME)) // 만료 시간
                         .setIssuedAt(date) // 발급일
@@ -83,7 +82,6 @@ public class JwtUtil {
         logger.error("Not Found Token");
         throw new NullPointerException("Not Found Token");
     }
-
     // 토큰 검증
     public boolean validateToken(String token) {
         try {
@@ -105,6 +103,7 @@ public class JwtUtil {
     public Claims getUserInfoFromToken(String token) {
         return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     }
+
     // HttpServletRequest 에서 Cookie Value : JWT 가져오기
     public String getTokenFromRequest(HttpServletRequest req) {
         Cookie[] cookies = req.getCookies();
@@ -121,5 +120,5 @@ public class JwtUtil {
         }
         return null;
     }
-}
 
+}

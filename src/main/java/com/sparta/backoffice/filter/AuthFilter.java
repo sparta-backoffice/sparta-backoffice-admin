@@ -16,6 +16,7 @@ import java.io.IOException;
 @Slf4j(topic = "AuthFilter")
 @Component
 @Order(2)
+
 public class AuthFilter implements Filter {
 
     private final AdminRepository adminRepository;
