@@ -39,13 +39,11 @@ public class AdminService {
     }
 
     public void login(AdminDto requestDto, HttpServletResponse response) {
+
         String adminEmail = requestDto.getEmail();
-
         Admin admin = adminRepository.findByEmail(adminEmail).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
-
         String token = jwtUtil.createToken(admin.getEmail(), admin.getAuthority());
+
         jwtUtil.addJwtToCookie(token,response);
-
-
     }
 }

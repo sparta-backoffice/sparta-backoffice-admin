@@ -19,12 +19,7 @@ public class InstructorService {
     private final InstructorRepository instructorRepository;
 
     @Transactional
-    public InstructorDto creteInstructor(InstructorDto requestDto, HttpServletRequest request) {
-
-        Admin admin = (Admin) request.getAttribute("admin");
-        if (admin.getAuthority() != Authority.MANAGER) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only managers are allowed to create instructors.");
-        }
+    public InstructorDto creteInstructor(InstructorDto requestDto) {
 
         Instructor instructor = Instructor.builder()
                 .instructorName(requestDto.getInstructorName())

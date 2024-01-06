@@ -18,7 +18,6 @@ public class LectureDto {
 	private LocalDate registerAt;
 	private Long instructorId;
 
-
 	public LectureDto(Lecture entity) {
 		this.lectureName = entity.getLectureName();
 		this.price = entity.getPrice();
