@@ -35,4 +35,5 @@ public class AdminDto {
         this.department = entity.getDepartment();
         this.authority = entity.getAuthority();
     }
+
 }

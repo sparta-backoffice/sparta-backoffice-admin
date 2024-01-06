@@ -21,11 +21,11 @@ public class InstructorController {
 
     @PutMapping("/{instructorId}")
     public ResponseEntity<InstructorDto> modifyInstructor(@RequestBody InstructorDto requestDto) {
-        return new ResponseEntity<>(instructorService.modifyInstructor(requestDto),HttpStatus.OK);
+        return new ResponseEntity<>(instructorService.modifyInstructor(requestDto), HttpStatus.OK);
     }
 
     @GetMapping("/{instructorId}")
     public ResponseEntity<InstructorDto> getInstructor(@PathVariable Long instructorId) {
-        return new ResponseEntity<>(instructorService.getInstructor(instructorId),HttpStatus.OK);
+        return new ResponseEntity<>(instructorService.getInstructor(instructorId), HttpStatus.OK);
     }
 }

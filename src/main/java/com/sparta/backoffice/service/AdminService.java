@@ -5,6 +5,8 @@ import com.sparta.backoffice.domain.entity.Admin;
 import com.sparta.backoffice.domain.entity.Authority;
 import com.sparta.backoffice.domain.entity.Department;
 import com.sparta.backoffice.repository.AdminRepository;
+import com.sparta.backoffice.util.JwtUtil;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,7 @@ import org.springframework.validation.annotation.Validated;
 public class AdminService {
 
     private final AdminRepository adminRepository;
-
+    private final JwtUtil jwtUtil;
     @Transactional
     public void createAdmin(@Valid AdminDto requestDto) {
         Authority authority = requestDto.getAuthority();
@@ -34,5 +36,17 @@ public class AdminService {
                 .authority(requestDto.getAuthority())
                 .build();
         adminRepository.save(admin);
+    }
+
+    public void login(AdminDto requestDto, HttpServletResponse response) {
+        String adminEmail = requestDto.getEmail();
+        String password = requestDto.getPassword();
+
+        Admin admin = adminRepository.findByEmail(adminEmail).orElseThrow(() -> new IllegalArgumentException("존재하지 않습니다."));
+
+        String token = jwtUtil.createToken(admin.getEmail(), admin.getAuthority());
+        jwtUtil.addJwtToCookie(token,response);
+
+
     }
 }
