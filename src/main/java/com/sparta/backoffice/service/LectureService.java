@@ -1,16 +1,18 @@
 package com.sparta.backoffice.service;
 
 import com.sparta.backoffice.domain.dto.LectureDto;
+import com.sparta.backoffice.domain.entity.Admin;
+import com.sparta.backoffice.domain.entity.Authority;
 import com.sparta.backoffice.domain.entity.Lecture;
 import com.sparta.backoffice.repository.LectureRepository;
-import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -47,7 +49,12 @@ public class LectureService {
 	}
 
 	@Transactional
-	public LectureDto modifyLecture(Long id, LectureDto lectureDto) {
+	public LectureDto modifyLecture(Long id, LectureDto lectureDto, HttpServletRequest request) {
+		Admin admin = (Admin) request.getAttribute("admin");
+		if (admin.getAuthority() != Authority.MANAGER) {
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Only managers are allowed to modify instructors.");
+		}
+
 		Lecture findLecture = lectureRepository.findById(id).orElseThrow();
 		findLecture.setLectureName(lectureDto.getLectureName());
 		findLecture.setPrice(lectureDto.getPrice());

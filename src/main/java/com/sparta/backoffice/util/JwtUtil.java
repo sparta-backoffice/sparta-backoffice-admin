@@ -1,6 +1,5 @@
 package com.sparta.backoffice.util;
 
-import com.sparta.backoffice.domain.entity.Admin;
 import com.sparta.backoffice.domain.entity.Authority;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

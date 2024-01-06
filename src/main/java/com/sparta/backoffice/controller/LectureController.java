@@ -2,6 +2,7 @@ package com.sparta.backoffice.controller;
 
 import com.sparta.backoffice.domain.dto.LectureDto;
 import com.sparta.backoffice.service.LectureService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,13 +29,13 @@ public class LectureController {
 		return new ResponseEntity<>(lecture, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/{id}")
-	public ResponseEntity<LectureDto> modifyLecture(@PathVariable Long id, @RequestBody LectureDto lectureDto) {
-		LectureDto lecture = lectureService.modifyLecture(id, lectureDto);
+	@PutMapping("/{lectureId}")
+	public ResponseEntity<LectureDto> modifyLecture(@PathVariable Long id, @RequestBody LectureDto lectureDto, HttpServletRequest request) {
+		LectureDto lecture = lectureService.modifyLecture(id, lectureDto, request);
 		return new ResponseEntity<>(lecture, HttpStatus.OK);
 	}
 
-	@GetMapping("/{id}")
+	@GetMapping("/{lectureId}")
 	public ResponseEntity<LectureDto> getLecture(@PathVariable Long id) {
 		LectureDto lecture = lectureService.getLecture(id);
 		return new ResponseEntity<>(lecture, HttpStatus.OK);
